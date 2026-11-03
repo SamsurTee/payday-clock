@@ -2,7 +2,7 @@
 
 一个开源、离线的中文薪资时钟。实时查看今天赚了多少钱、每秒收入与下班倒计时。支持 Windows、macOS，也可以直接在浏览器使用。首次打开即可配置，薪资信息只保存在本机。
 
-![薪动图标](build/icon.svg)
+<img src="build/icon.svg" width="88" alt="薪动图标">
 
 ## 下载桌面版
 
@@ -18,7 +18,7 @@
 
 首版没有商业代码签名证书和 Apple 公证；macOS 包使用本地 ad-hoc 签名，下载后可能触发系统安全提示。Windows 包也可能出现未知发布者提示。请核对仓库来源及 Release 附带的 SHA-256 校验值，再按系统提供的安全设置选择是否允许打开。不要关闭系统整体安全保护。
 
-Windows 版本在 macOS 上交叉构建，尚未在 Windows 实机进行交互验收。
+Apple Silicon 版已在 macOS 实际验证启动、配置保存、实时收入与专注小窗；两个 Mac 包均通过签名完整性检查。Windows 版本在 macOS 上交叉构建，尚未在 Windows 实机进行交互验收。
 
 ## 功能
 
@@ -74,7 +74,7 @@ npm run dist:win
 npm run dist:win:cross
 ```
 
-产物位于 `dist/`。macOS App 需在 macOS 上构建。包版本锁定在 `package-lock.json`，不需要提供任何 GitHub 或签名密钥就能本地构建。未来若配置正式签名／公证，请通过安全的环境变量或证书存储注入，勿提交密钥。
+产物位于 `dist/`。若项目在 iCloud／同步文稿文件夹内，签名出现 Finder 元数据错误，可在构建命令后加 `-- -c.directories.output=/private/tmp/payday-clock-dist`，将产物输出到非同步目录。macOS App 需在 macOS 上构建。包版本锁定在 `package-lock.json`，不需要提供任何 GitHub 或签名密钥就能本地构建。未来若配置正式签名／公证，请通过安全的环境变量或证书存储注入，勿提交密钥。
 
 ## 计算规则
 
