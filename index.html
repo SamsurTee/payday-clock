@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="theme-color" content="#f5f6f0"><meta name="description" content="把工作的每一秒，变成看得见的小小收获。薪资实时计时器，数据只保存在本机。">
+  <title>薪动 · 每一秒，都算数</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%232d5544'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-size='42' fill='%23def2a4'%3E¥%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="calculator.js"></script><script defer src="app.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar"><a class="brand" href="./index.html"><span class="brand-icon">¥<i></i></span><span>薪动<span class="brand-en">PAYDAY CLOCK</span></span></a><div class="header-actions"><span class="local-badge"><span></span> 仅保存在本机</span><button class="icon-button" id="settingsButton" aria-label="打开薪资设置"><span aria-hidden="true">⚙</span> 薪资设置</button></div></header>
+    <main>
+      <div class="intro"><div><div class="eyebrow">MAKE EVERY SECOND COUNT</div><h1>认真生活，<span>慢慢进账。</span></h1><p>让工作的每一秒，都有一点看得见的回报。</p></div><div class="today"><span id="dateText"></span><strong id="clockText"></strong></div></div>
+      <div class="dashboard">
+        <section class="earnings card">
+          <div class="card-heading"><span class="section-label">今日已赚 <span class="tag" id="demoTag">示例薪资</span></span><span class="status" id="statusBadge"><i></i><span id="statusText">上班中</span></span></div>
+          <div class="money-line"><span class="currency" id="currencySymbol">¥</span><span id="earnedWhole">0</span><span class="money-decimals" id="earnedDecimal">.0000</span></div>
+          <div class="rate-line"><span class="spark">↗</span> 每一秒 <strong id="secondRate">¥0.0000</strong><span class="rate-divider"></span><span id="earningMessage">正在积累今天的小确幸</span></div>
+          <div class="plant" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><span class="coin coin-one">¥</span><span class="coin coin-two">✦</span><span class="stem"></span><span class="leaf leaf-one"></span><span class="leaf leaf-two"></span><span class="leaf leaf-three"></span><span class="pot"></span><span class="plant-ground"></span></div>
+          <div class="progress-section"><div class="progress-label"><span>今日工作进度</span><strong id="progressText">0%</strong></div><div class="progress-track" role="progressbar" aria-label="今日工作进度" aria-valuemin="0" aria-valuemax="100" id="progressBar"><div id="progressFill"></div></div><div class="progress-foot"><span>已工作 <b id="workedHours">0</b> / <span id="dailyHours">8</span> 小时</span><span>今日预计 <b id="dailyPay">¥0.00</b></span></div></div>
+        </section>
+        <section class="countdown card"><div class="card-heading"><span class="section-label" id="countdownLabel">距离下班还有</span><span class="tiny-icon" aria-hidden="true">◷</span></div><div class="timer"><div><strong id="timerH">00</strong><span>小时</span></div><b>:</b><div><strong id="timerM">00</strong><span>分钟</span></div><b>:</b><div><strong id="timerS">00</strong><span>秒</span></div></div><div class="countdown-note" id="countdownNote">每一秒，都离自己的时间更近一点。</div><div class="schedule"><span><i class="schedule-dot"></i><span id="scheduleText">09:00 — 18:00</span></span><span id="lunchText">午休 1 小时</span></div><button class="focus-button" id="focusButton"><span aria-hidden="true">⤢</span> 打开专注小窗 <span aria-hidden="true">↗</span></button></section>
+        <section class="month card"><div class="card-heading"><span class="section-label">本月累计 <span class="tag">排班估算</span></span><span id="monthLabel" class="muted"></span></div><div class="month-amount" id="monthEarned">¥0.00</div><div class="month-details"><span>本月预计 <strong id="monthTotal">¥0.00</strong></span><span id="monthDays">0 个工作日</span></div><div class="mini-progress"><div id="monthFill"></div></div><p>按当前设置补算本月已过工作日，含今日已赚。</p></section>
+        <section class="metrics card"><div class="metric"><span class="metric-icon">◴</span><div><span>时薪</span><strong id="hourlyRate">¥0.00</strong></div></div><div class="metric"><span class="metric-icon">☀</span><div><span>每日计薪时长</span><strong><span id="hoursMetric">8</span><small> 小时</small></strong></div></div><div class="metric"><span class="metric-icon">▦</span><div><span>每周工作日</span><strong><span id="weekDays">5</span><small> 天</small></strong></div></div></section>
+      </div>
+      <div class="bottom-note"><span class="note-star">✳</span><span id="quoteText">收入在增长，生活也别忘了留白。</span><span class="note-line"></span><span>好好工作，也好好休息</span></div>
+      <footer><span>薪动 <span class="footer-dot">·</span> 每一秒，都算数</span><button id="explainButton">怎么算的？ <span>↗</span></button></footer>
+    </main>
+  </div>
+  <dialog id="settingsDialog" aria-labelledby="settingsTitle"><form id="settingsForm"><div class="dialog-heading"><div><span class="eyebrow">YOUR WORK, YOUR PACE</span><h2 id="settingsTitle">设置你的工作节奏</h2></div><button type="button" class="close-button" id="closeSettings" aria-label="关闭设置">×</button></div><p class="dialog-intro">填好这几项，让每一份努力都有迹可循。</p>
+    <div class="form-grid"><div class="wide salary-type">薪资类型<div class="segmented" id="basisGroup"><label><input type="radio" name="basis" value="monthly" checked><span>按月计薪</span></label><label><input type="radio" name="basis" value="daily"><span>按天计薪</span></label><label><input type="radio" name="basis" value="hourly"><span>按小时计薪</span></label></div></div>
+    <label><span id="salaryLabel">月薪金额</span><input name="salary" type="number" min="0.01" max="100000000" step="0.01" required inputmode="decimal"></label><label>币种<select name="currency"><option value="CNY">人民币 CNY · ¥</option><option value="USD">美元 USD · $</option><option value="HKD">港币 HKD · HK$</option></select></label>
+    <div class="wide form-grid" id="monthlyFields"><label>月薪折算方式<select name="divisor"><option value="actual">按当月实际工作日</option><option value="fixed">按固定计薪天数</option></select></label><label id="fixedDaysField">每月计薪天数<input name="fixedDays" type="number" min="0.01" max="31" step="0.01"></label></div>
+    <label>上班时间<input type="time" name="start" required></label><label>下班时间<input type="time" name="end" required></label>
+    <div class="wide lunch-toggle"><span>午休不计入工作时长</span><label class="switch"><input type="checkbox" name="lunch" aria-label="扣除午休"><span></span></label></div>
+    <div class="wide form-grid" id="lunchFields"><label>午休开始<input type="time" name="lunchStart" required></label><label>午休结束<input type="time" name="lunchEnd" required></label></div>
+    <fieldset class="wide"><legend>每周工作日</legend><div class="day-picker" id="dayPicker"></div></fieldset>
+    </div><p class="form-help">按本机时间计算，支持同日班次；暂不自动识别法定节假日及调休。修改设置会重新计算本月估算。</p><p class="form-error" id="formError" role="alert"></p><div class="dialog-actions"><span>薪资信息不会上传</span><button class="primary-button" type="submit">保存，开始薪动 <span>→</span></button></div>
+  </form></dialog>
+  <dialog id="explainDialog" aria-labelledby="explainTitle"><div class="dialog-heading"><h2 id="explainTitle">每一秒，怎么算？</h2><button class="close-button" id="closeExplain" aria-label="关闭说明">×</button></div><div class="explanation"><p><strong>今日已赚 = 有效工作秒数 × 每秒收入</strong><br>只累计所选工作日的工作时间，扣除午休，到下班时停止。关闭页面后再打开，会按当前时间重新计算。</p><p><strong>薪资折算</strong><br>月薪 ÷ 当月排班工作日（或固定计薪天数）= 日薪；日薪 ÷ 每日计薪小时 = 时薪；时薪 ÷ 3600 = 每秒收入。按小时计薪时直接使用你填写的时薪。</p><p><strong>本月累计是估算值</strong><br>默认本月已过的排班日都完成工作，加上今日已赚。没有记录真实打卡，不扣请假、不计算加班、税费或节假日调休。固定天数折算时，本月预计可能与月薪不同。</p><p><strong>数据留在你的浏览器</strong><br>设置保存到本机浏览器；清理浏览器数据会清除设置。不同设备、浏览器或打开地址之间不自动同步。</p></div></dialog>
+  <div id="toast" role="status"></div>
+</body>
+</html>
